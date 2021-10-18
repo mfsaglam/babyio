@@ -13,13 +13,17 @@ struct BreastFeeding: View {
             HStack {
                 Spacer()
                 Text("New breast feeding")
-                    .font(.title)
+                    .font(.title2)
+                    .bold()
                 Spacer()
                 Image(systemName: "xmark")
                     .font(.title)
+                    .padding()
             }
+            Spacer()
             Text("Tap left or right button to start the timer.")
                 .font(.headline)
+            Spacer()
             HStack {
                 VStack {
                     Image(systemName: "pause")
@@ -29,8 +33,17 @@ struct BreastFeeding: View {
                     Text("00:35")
                 }
                 .frame(width: 150, height: 150)
-                .background(Circle()
-                                .fill(Color(#colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)))
+                .background(
+                    ZStack {
+                        BreastLeftBack()
+                            .fill(Color(#colorLiteral(red: 0.8862745098, green: 0.568627451, blue: 0.5529411765, alpha: 1)))
+                            .opacity(0.5)
+                            .frame(width: 200, height: 200, alignment: .center)
+                        BreastLeftFront()
+                            .fill(Color(#colorLiteral(red: 0.8862745098, green: 0.568627451, blue: 0.5529411765, alpha: 1)))
+                            .frame(width: 140, height: 140, alignment: .center)
+                    }
+                                
                 )
                 VStack {
                     Image(systemName: "play")
@@ -41,18 +54,32 @@ struct BreastFeeding: View {
                     Text("00:00")
                 }
                 .frame(width: 150, height: 150)
-                .background(Circle()
-                                .fill(Color(#colorLiteral(red: 0.9411764741, green: 0.4980392158, blue: 0.3529411852, alpha: 1)))
+                .background(
+                    ZStack {
+                        BreastLeftBack()
+                            .fill(Color(#colorLiteral(red: 0.9568627451, green: 0.7725490196, blue: 0.5411764706, alpha: 1)))
+                            .opacity(0.5)
+                            .frame(width: 200, height: 200, alignment: .center)
+                        BreastLeftFront()
+                            .fill(Color(#colorLiteral(red: 0.9568627451, green: 0.7725490196, blue: 0.5411764706, alpha: 1)))
+                            .frame(width: 140, height: 140, alignment: .center)
+                    }
+                    .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
+
                 )
                 
             }
+            Spacer()
             VStack {
                 Text("Total")
                     .font(.title)
+                    .bold()
                 Text("00:35")
             }
+            Spacer()
             Text("Stop timer")
                 .font(.title3)
+                .bold()
                 .foregroundColor(.white)
                 .padding(.horizontal, 140)
                 .padding(.vertical, 20)
@@ -61,6 +88,7 @@ struct BreastFeeding: View {
                 )
             Text("Reset")
                 .font(.title3)
+                .bold()
                 .foregroundColor(.black)
                 .padding(.horizontal, 140)
                 .padding(.vertical, 20)

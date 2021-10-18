@@ -8,30 +8,52 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var selectedIndex = 0
+    let segmentedSelections = ["Total", "Average"]
     var body: some View {
         ZStack {
             Color(#colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1))
                 .opacity(0.05)
                 .ignoresSafeArea()
             VStack(spacing: 30.0) {
-                HStack {
-                    Text("Feedings")
-                        .font(.title)
-                        .bold()
-                    Spacer()
-                    Image(systemName: "plus")
-                        .frame(width: 36, height: 36)
-                        .background(Color.white.opacity(0.4))
-                        .clipShape(Circle())
+                ZStack {
+                    HeaderBlob2()
+                        .fill(Color(#colorLiteral(red: 0.3568627451, green: 0.4941176471, blue: 0.9019607843, alpha: 1)))
+                        .frame(width: 100, height: 50, alignment: .center)
+                        .scaleEffect(5.5)
+                        .offset(x: 0, y: -70)
+                    HeaderBlob1()
+                        .fill(Color(#colorLiteral(red: 0.9142134786, green: 0.6421766877, blue: 0.6208087206, alpha: 1)))
+                        .frame(width: 100, height: 70, alignment: .center)
+                        .scaleEffect(4)
+                        .offset(x: 80, y: -100)
+                    HStack {
+                        Text("Feedings")
+                            .font(.title)
+                            .bold()
+                            .foregroundColor(.white)
+                        Spacer()
+                        Button {
+                            
+                        } label: {
+                            Image(systemName: "plus")
+                                .foregroundColor(.black)
+                                .frame(width: 36, height: 36)
+                                .background(Color.white.opacity(0.4))
+                                .clipShape(Circle())
+                        }
+                    }
+                    .padding(.horizontal)
                 }
                 HStack {
-                    Text("Total")
-                        .padding(.horizontal, 50)
-                        .padding(.vertical, 5)
-                    Text("Average")
-                        .bold()
-                        .padding(.horizontal, 50)
-                        .padding(.vertical, 5)
+                    ForEach(0 ..< segmentedSelections.count) { i in
+                        UnderlinedSegmentedControl(text: segmentedSelections[i], isSelected: i == selectedIndex)
+                            .onTapGesture {
+                                withAnimation(.interactiveSpring()) {
+                                    selectedIndex = i
+                                }
+                            }
+                    }
                 }
                 HStack {
                     VStack(alignment: .leading) {
@@ -46,8 +68,14 @@ struct ContentView: View {
                     }
                     .padding()
                     .overlay(
-                        RoundedRectangle(cornerRadius: 15, style: .continuous)
-                            .stroke(lineWidth: 2)
+                        Button {
+                            
+                        }
+                        label: {
+                            RoundedRectangle(cornerRadius: 15, style: .continuous)
+                                .stroke(lineWidth: 2)
+                                .foregroundColor(.black)
+                        }
                     )
                 }
                 HStack {
@@ -66,17 +94,19 @@ struct ContentView: View {
                     WaveView()
                         .fill(Color(#colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1)))
                         .frame(height: 150)
+                        .scaleEffect(1.2)
                         .opacity(0.2)
                         .overlay(
                         WaveLine()
                             .stroke(Color(#colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)), lineWidth: 4.0)
                             .frame(height: 100)
+                            .scaleEffect(1.2)
                         )
                         .overlay(
                             Circle()
                                 .fill(Color(#colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)))
                                 .frame(width:25)
-                                .offset(x: 22, y: /*@START_MENU_TOKEN@*/10.0/*@END_MENU_TOKEN@*/)
+                                .offset(x: 22, y: 10.0)
                         )
                         .overlay(
                             ZStack {
@@ -150,5 +180,22 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+    }
+}
+
+struct UnderlinedSegmentedControl: View {
+    var text: String
+    var isSelected: Bool
+    var body: some View {
+        VStack(spacing: 0.0) {
+            Text(text)
+                .font(.system(size: 15, weight: isSelected ? .bold: .regular))
+                .padding(.horizontal, 50)
+                .padding(.vertical, 5)
+            if isSelected {
+                Rectangle()
+                    .frame(width: 150, height: 3)
+            }
+        }
     }
 }
